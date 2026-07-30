@@ -9,6 +9,7 @@
 
 html {
     background-color: #1b1b1b;
+    font-size: 16px;
 }
 
 body {
@@ -58,8 +59,8 @@ main {
     content: '';
     display: block;
     position: absolute;
-    left: -2px;
-    right: -2px;
+    left: 0;
+    right: 0;
     top: -2px;
     z-index: 30;
     width: inherit;
@@ -71,6 +72,16 @@ main {
         rgba(33, 38, 39, 0.07) 4px,
         rgba(138, 141, 142, 0.09) 3px
     );
+}
+
+.btn {
+    background-color: #88d0eb;
+    color: #000;
+    border-radius: 4px;
+    padding: 1px 3px;
+    margin: 2px 2px;
+    text-decoration: none;
+    display: inline-block;
 }
 
 .page-margin-column * {
@@ -154,7 +165,7 @@ gallery {
 
 .tooltip {
     width: max-content;
-    bottom: 90%;
+    position: relative;
     left: 10px;
     background-color: #feae;
     color: #000;

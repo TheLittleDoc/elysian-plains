@@ -3,15 +3,15 @@
         {{ $directoryHeading ?? 'Directory' }}
     </h2>
     <h2>
+        @foreach ($entries as $entry)
         <x-directorylisting>
-            <x-slot:name>Blog</x-slot:name>
-            <x-slot:url>posts.php</x-slot:url>
+            <x-slot:name>{{ $entry['name'] }}</x-slot:name>
+            @if (isset($entry['description']))
+                <x-slot:description>{{ $entry['description'] }}</x-slot:description>
+            @endif
+            <x-slot:url>{{ $entry['url'] }}</x-slot:url>
         </x-directorylisting>
-        <x-directorylisting>
-            <x-slot:name>Login</x-slot:name>
-            <x-slot:description>Log in to comment and like</x-slot:description>
-            <x-slot:url>login</x-slot:url>
-        </x-directorylisting>
+        @endforeach
     </h2>
 
 

@@ -1,8 +1,28 @@
+<?php
+$entries = [
+    [
+        'url' => '/login',
+        'name' => 'Login',
+        'description' => 'Login to your account'
+    ],
+    [
+        'url' => '/posts.php',
+        'name' => 'Posts',
+        'description' => 'View all posts'
+    ],
+    [
+        'url' => '/',
+        'name' => 'Home',
+        'description' => 'View the home page'
+    ]
+];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 
-    <title>{{ isset($title) ? $title . ' - Chirper' : 'Chirper' }}</title>
+    <title>{{ isset($title) ? $title . ' - Elysian Plains' : 'Elysian Plains' }}</title>
 
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -22,14 +42,31 @@
             </div>
         </div>
         <nav class="flex flex-row-reverse gap-2 py-2">
+            @auth
+                <span class="text-sm">{{ auth()->user()->name }}</span>
+                <form method="POST" action="/logout" class="inline">
+                    @csrf
+                    <button type="submit" class="btn btn-ghost btn-sm">Logout</button>
+                </form>
+            @else
             <a href="/login" class="text-base-content/60 hover:text-base-content">Login</a>
-            <a href="/signup" class="text-base-content/60 hover:text-base-content">Sign Up</a>
+            <a href="{{ route('register') }}" class="text-base-content/60 hover:text-base-content">Sign Up</a>
+            @endauth
         </nav>
     </header>
     <main class="flex content-center gap-4">
-        <x-directory class="page-margin-column gap-4 px-4 py-2">
+        <x-directory class="page-margin-column gap-4 px-4 py-2" :entries="$entries" :directoryHeading="$directoryHeading ?? 'Directory'">
 
         </x-directory>
+        @auth
+            <form method="POST" action="/posts" class="page-margin-column gap-4 px-4 py-2">
+                @csrf
+
+                <button type="submit" class="btn btn-primary btn-sm w-full">
+                    Create Post
+                </button>
+            </form>
+        @endauth
         <pageContent class="gap-4 px-4 py-2">
             {{ $slot }}
         </pageContent>
