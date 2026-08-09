@@ -27,27 +27,6 @@ class Post extends Model
         return self::latest()->first()->id;
     }
 
-    public static function create(): Post
-    {
-        // create a new post with default values
-        $post = new self();
-        $post->title = 'New Post';
-        $post->content = json_encode([
-            [
-                "type" => "heading",
-                "value" => "Post #" . (self::newest() + 1),
-                "level" => 1
-            ],
-            [
-                "type" => "paragraph",
-                "value" => "This is the content of the new post."
-            ]
-        ]);
-        $post->user_id = auth()->id();
-        $post->published = 0;
-        $post->save();
-        return $post;
-    }
 
 
     public function user(): BelongsTo

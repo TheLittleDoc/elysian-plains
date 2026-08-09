@@ -3,7 +3,7 @@
     @push('scripts')
         @vite('resources/js/editor.js')
     @endpush
-    <script src="{{ asset('js/editor.js') }}"></script>
+    <script src="{{ asset('resources/js/editor.js') }}"></script>
     <form method="POST" action="{{ route('posts.update', $post->id) }}" class="max-w-2xl mx-auto mt-8">
         @csrf
         @method('PUT')

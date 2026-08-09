@@ -44,7 +44,26 @@ class PostController extends Controller
         }
         echo "<script type='text/javascript'>alert('$message');</script>";
 
-        $post = Post::create();
+        $post = Post::create([
+            'title' => 'New Post',
+            'content' => json_encode([
+                [
+                    "type" => "heading",
+                    "value" => "Post #" . (Post::newest() + 1),
+                    "level" => 1
+                ],
+                [
+                    "type" => "paragraph",
+                    "value" => "This is the content of the new post."
+                ]
+            ]),
+            'user_id' => auth()->id(),
+            'published' => 0,
+        ]);
+
+
+
+        $post->save();
 
         return redirect('/posts/' . $post['id'] . '/edit')->with('success', 'Post created successfully!');
     }
