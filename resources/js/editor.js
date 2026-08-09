@@ -1,4 +1,5 @@
-let json_content = JSON.parse(document.getElementById('content').value || '[]');
+let contentTextarea = document.getElementById('content');
+let json_content = JSON.parse(contentTextarea.value || '[]');
 
 function updateContentTextarea() {
     const contentTextarea = document.getElementById('content');
@@ -6,9 +7,17 @@ function updateContentTextarea() {
 
 }
 
+function parseContent() {
+    try {
+        json_content = JSON.parse(contentTextarea.value);
+    } catch (e) {
+        alert('Error parsing content: ' + e.message);
+    }
+}
+
+
 function renderContent() {
-    const contentTextarea = document.getElementById('content');
-    json_content = JSON.parse(contentTextarea.value);
+    parseContent();
 
     const renderedContentDiv = document.getElementById('rendered_content');
     renderedContentDiv.innerHTML = ''; // Clear previous content
@@ -69,6 +78,7 @@ function renderContent() {
 }
 
 function addBlock() {
+    parseContent();
     const blockType = document.getElementById('block_type').value;
     if (!blockType) {
         alert('Please select a block type.');
@@ -91,6 +101,7 @@ function addBlock() {
             alert('Invalid block type selected.');
             return;
     }
+
     json_content.push(newBlock);
     updateContentTextarea();
 }
