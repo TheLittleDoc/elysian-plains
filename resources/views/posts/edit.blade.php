@@ -3,7 +3,7 @@
     @push('scripts')
         @vite('resources/js/editor.js')
     @endpush
-    <script src="{{ asset('js/editor.js') }}"></script>
+    <script src="{{ asset('resources/js/editor.js') }}"></script>
     <form method="POST" action="{{ route('posts.update', $post->id) }}" class="max-w-2xl mx-auto mt-8">
         @csrf
         @method('PUT')
@@ -43,12 +43,13 @@
         <button type="button" class="btn btn-secondary mb-4" onclick="renderContent()">Render Content</button>
         <button type="submit" class="btn btn-primary">Update Post</button>
         <button type="button" class="btn btn-warning ml-2" onclick="if(confirm('Are you sure you want to discard your edits?')) { window.location.href='{{ route('home') }}' }">Cancel</button>
-        <form action="{{ route('posts.destroy', $post['id']) }}" method="POST" class="inline-block">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="btn btn-sm btn-error mt-2" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
 
-        </form>
+    </form>
+    <form action="{{ route('posts.destroy', $post['id']) }}" method="POST" class="inline-block">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-sm btn-error mt-2" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
+
     </form>
     <div class="max-w-2xl mx-auto mt-8">
         <h2 class="text-2xl font-bold mb-4">Rendered Content Preview</h2>
