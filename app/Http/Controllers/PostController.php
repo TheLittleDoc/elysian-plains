@@ -9,15 +9,31 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = \App\Models\Post::all();
-        $posts->sortByDesc('created_at');
-
-        return view('posts.index', ['posts' => $posts]);
+        // redirect to home
+        return redirect('/');
     }
+
+    // show individual post
+    public function show (Post $post)
+    {
+        if($post->published == 0)
+        {
+            // 404
+            if(!auth()->user() || !auth()->user()->isAdmin())
+                abort(404);
+
+        }
+        return view('posts.post', compact('post'));
+    }
+
 
     public function store(Request $request)
     {
 
+        if(!auth()->user())
+        {
+            return redirect('/')->with('failure', 'You must be logged in to create posts.');
+        }
         // popup alert
         if (auth()->user()->isAdmin()) {
             $message = "You are an admin and can create posts. (Admin ID: " . auth()->id() . ")";
@@ -28,16 +44,7 @@ class PostController extends Controller
         }
         echo "<script type='text/javascript'>alert('$message');</script>";
 
-        $post = Post::create([
-            'title' => 'New Post',
-            'content' => json_encode([
-                [
-                    "type"=>"paragraph",
-                    "value"=>"This is the content of the new post 5."
-                ]
-        ]),
-            'user_id' => auth()->id()
-        ]);
+        $post = Post::create();
 
         return redirect('/posts/' . $post['id'] . '/edit')->with('success', 'Post created successfully!');
     }

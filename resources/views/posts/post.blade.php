@@ -1,18 +1,8 @@
 <?php use Carbon\Carbon; ?>
 
+
 <x-layout>
-    <x-slot:title>
-        Welcome
-    </x-slot:title>
-    <x-slot:directoryHeading>
-        Directory
-    </x-slot:directoryHeading>
-    <x-slot:galleryHeading>
-        Calendar
-    </x-slot:galleryHeading>
     <div class="max-w-4xl mx-auto">
-        @foreach ($posts as $post)
-            @if($post['published'])
             <div class="card bg-base-100 shadow mt-8">
                 <div class="card-body">
                     <div>
@@ -33,14 +23,14 @@
                         @endauth
                         @if (@isset ($post['created_at']))
                             @php
-                            $date = Carbon::parse($post['created_at']);
-                            $formattedDate = $date->format('l, F j, Y');
+                                $date = Carbon::parse($post['created_at']);
+                                $formattedDate = $date->format('l, F j, Y');
                             @endphp
                             <p class="text-base-content/60 mt-2">{{$formattedDate}}</p>
                         @endif
-                            @php
+                        @php
                             $json_content = json_decode($post['content'], true);
-                            @endphp
+                        @endphp
                         @foreach($json_content as $section)
                             @switch ($section['type'] )
                                 @case('paragraph')
@@ -78,7 +68,8 @@
                     </div>
                 </div>
             </div>
-            @endif
-        @endforeach
+
+
     </div>
+
 </x-layout>

@@ -1,4 +1,4 @@
-let json_content = JSON.parse('<?php echo ($post->content); ?>');
+let json_content = JSON.parse(document.getElementById('content').value || '[]');
 
 function updateContentTextarea() {
     const contentTextarea = document.getElementById('content');
@@ -48,13 +48,23 @@ function renderContent() {
                 }
                 break;
             default:
+            {
+                sectionElement = document.createElement('p');
+                // red italics
+                sectionElement.className = 'text-red-500 italic';
+
+                sectionElement.textContent = `Unknown block type: ${section.type}`;
                 console.warn(`Unknown block type: ${section.type}`);
+            }
         }
 
         if (sectionElement) {
             renderedContentDiv.appendChild(sectionElement);
         }
     }
+
+    // wait for the DOM to update before showing the alert
+
     alert('Rendered ' + json_content.length + ' blocks.');
 }
 
@@ -69,7 +79,7 @@ function addBlock() {
 
     switch(blockType) {
         case 'text':
-            newBlock = { type: 'text', value: '' };
+            newBlock = { type: 'paragraph', value: '' };
             break;
         case 'image':
             newBlock = { type: 'image', url: '', alt: '', style: '' };
@@ -84,3 +94,7 @@ function addBlock() {
     json_content.push(newBlock);
     updateContentTextarea();
 }
+
+window.addBlock = addBlock;
+window.renderContent = renderContent;
+window.updateContentTextarea = updateContentTextarea;

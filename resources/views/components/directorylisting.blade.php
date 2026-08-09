@@ -1,10 +1,24 @@
 <div class="directory-listing">
-    <a href="{{ $url }}" class="">
-        <h2 class="text-lg font-bold">{{ $name }}</h2>
-        <?php if(isset($description)): ?>
-            <p class="tooltip mt-2 text-base-content/60">{{ $description }}</p>
-        <?php else: ?>
+    @if(isset($method))
+        <form action="{{ $url }}" method="{{ $method }}" class="inline-block">
+            @csrf
+            <button type="submit" class="btn-a">
+                <h2 class="text-lg font-bold">{{ $name }}</h2>
+                @if(isset($description))
+                    <p class="tooltip mt-2 text-base-content/60">{{ $description }}</p>
+                @else
 
-        <?php endif; ?>
-    </a>
+                @endif
+            </button>
+        </form>
+    @else
+        <a href="{{ $url }}" class="">
+            <h2 class="text-lg font-bold">{{ $name }}</h2>
+            @if(isset($description))
+                <p class="tooltip mt-2 text-base-content/60">{{ $description }}</p>
+            @else
+
+            @endif
+        </a>
+    @endif
 </div>

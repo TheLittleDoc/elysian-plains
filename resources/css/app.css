@@ -52,6 +52,11 @@ main {
     flex-direction: column;
 }
 
+.btn-a {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 .page-margin-column:before {
     pointer-events: none;
     margin: 0;
@@ -175,4 +180,11 @@ gallery {
     z-index: 10;
     font-size: 9pt;
     display: none;
+}
+
+
+.floating-label>span {
+    position: relative;
+    margin-bottom: 1.5rem;
+    color: blue;
 }

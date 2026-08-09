@@ -35,4 +35,15 @@ Route::post('/logout', LogoutController::class)
 
 // posts.create
 Route::resource('posts', PostController::class)
-    ->only(['store', 'edit', 'update', 'destroy']);
+    ->only(['index','show','store', 'edit', 'update', 'destroy']);
+
+// update view
+Route::view('/profile', 'auth.profile')
+    ->middleware('auth')
+    ->name('profile');
+
+// update profile route
+Route::post('/profile', \App\Http\Controllers\Auth\UpdateProfile::class)
+    ->middleware('auth')
+    ->name('profile.update');
+

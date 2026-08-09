@@ -1,10 +1,12 @@
+
 <x-layout>
+    @push('scripts')
+        @vite('resources/js/editor.js')
+    @endpush
+    <script src="{{ asset('js/editor.js') }}"></script>
     <form method="POST" action="{{ route('posts.update', $post->id) }}" class="max-w-2xl mx-auto mt-8">
         @csrf
         @method('PUT')
-        <script>
-
-        </script>
         <div class="mb-4">
             <label for="title" class="block text-gray-700 font-bold mb-2">Title</label>
             <input type="text" name="title" id="title" value="{{ old('title', $post->title) }}" class="input input-bordered w-full @error('title') input-error @enderror" required>
@@ -13,9 +15,10 @@
             @enderror
         </div>
 
+
         <div class="mb-4">
             <label for="block_type" class="block text-gray-700 font-bold mb-2">Block Type</label>
-            <select name="block_type" id="block_type" class="select select-bordered w-full @error('block_type') select-error @enderror" required>
+            <select name="block_type" id="block_type" class="select select-bordered w-full @error('block_type') select-error @enderror">
                 <option value="">Select a block type</option>
                 <option value="text">Text</option>
                 <option value="image">Image</option>
@@ -40,7 +43,12 @@
         <button type="button" class="btn btn-secondary mb-4" onclick="renderContent()">Render Content</button>
         <button type="submit" class="btn btn-primary">Update Post</button>
         <button type="button" class="btn btn-warning ml-2" onclick="if(confirm('Are you sure you want to discard your edits?')) { window.location.href='{{ route('home') }}' }">Cancel</button>
-        <button type="button" class="btn btn-error ml-2" onclick="if(confirm('Are you sure you want to delete this post?')) { window.location.href='{{ route('posts.destroy', $post->id) }}'; }">Delete Post</button>
+        <form action="{{ route('posts.destroy', $post['id']) }}" method="POST" class="inline-block">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-sm btn-error mt-2" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
+
+        </form>
     </form>
     <div class="max-w-2xl mx-auto mt-8">
         <h2 class="text-2xl font-bold mb-4">Rendered Content Preview</h2>
