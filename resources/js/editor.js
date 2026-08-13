@@ -24,7 +24,7 @@ function renderContent() {
     for(let i = 0; i < json_content.length; i++) {
         const section = json_content[i];
         let sectionElement;
-
+        let followingElement;
         switch(section.type) {
             case 'paragraph':
                 sectionElement = document.createElement('p');
@@ -56,6 +56,37 @@ function renderContent() {
                         sectionElement.className = 'text-xl font-bold mt-4';
                 }
                 break;
+            case 'blockquote':
+                sectionElement = document.createElement('blockquote');
+                sectionElement.textContent = section.value;
+                sectionElement.className = "border-l-4 border-gray-300 pl-4 italic mt-4";
+
+                followingElement = document.createElement('p');
+                followingElement.textContent = "— " + section.attr;
+                followingElement.className = "text-sm text-gray-500 mt-1";
+
+                break;
+            case 'list':
+                if (section.ordered) {
+                    sectionElement = document.createElement('ol');
+                } else {
+                    sectionElement = document.createElement('ul');
+                }
+                for (const item of section.value) {
+                    const li = document.createElement('li');
+                    li.textContent = item;
+                    sectionElement.appendChild(li);
+                }
+                break;
+            case 'pre':
+                sectionElement = document.createElement('pre');
+                sectionElement.textContent = section.value;
+                sectionElement.className = "bg-gray-100 p-4 rounded mt-4 overflow-x-auto";
+                break;
+            case 'html':
+                sectionElement = document.createElement('div');
+                sectionElement.innerHTML = section.value;
+                break;
             default:
             {
                 sectionElement = document.createElement('p');
@@ -69,6 +100,9 @@ function renderContent() {
 
         if (sectionElement) {
             renderedContentDiv.appendChild(sectionElement);
+        }
+        if (followingElement) {
+            renderedContentDiv.appendChild(followingElement);
         }
     }
 
@@ -96,6 +130,18 @@ function addBlock() {
             break;
         case 'heading':
             newBlock = { type: 'heading', value: '', level: 1 };
+            break;
+        case 'blockquote':
+            newBlock = { type: 'blockquote', value: '', attr: '' };
+            break;
+        case 'list':
+            newBlock = { type: 'list', value: [], ordered: false };
+            break;
+        case 'pre':
+            newBlock = { type: 'pre', value: '', language: '' };
+            break;
+        case 'html':
+            newBlock = { type: 'html', value: '' };
             break;
         default:
             alert('Invalid block type selected.');

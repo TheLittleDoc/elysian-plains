@@ -23,6 +23,10 @@
                 <option value="text">Text</option>
                 <option value="image">Image</option>
                 <option value="heading">Heading</option>
+                <option value="list">List</option>
+                <option value="pre">Code</option>
+                <option value="blockquote">Quote</option>
+                <option value="html">HTML</option>
             </select>
             <button type="button" id="add_block" class="btn btn-secondary mt-2" onclick="addBlock()">Add Block</button>
         </div>
