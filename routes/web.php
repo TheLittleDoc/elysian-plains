@@ -47,3 +47,4 @@ Route::post('/profile', \App\Http\Controllers\Auth\UpdateProfile::class)
     ->middleware('auth')
     ->name('profile.update');
 
+Route::feeds();

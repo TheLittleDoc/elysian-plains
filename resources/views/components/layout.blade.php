@@ -58,7 +58,7 @@ $entries = [
     <!-- a three-panel flexbox containing the edition, the logo in the middle, and the date on the right -->
     <div class="flex items-center justify-between px-4 py-2">
         <div class="header-left text-balance text-base-content/60 flex-1/6">
-            {{ $edition ?? 'Edition' }}
+            {{ 'Edition 0' }}
         </div>
         <div class="nameplate text-3xl font-bold text-center flex-2/3">
             Elysian Plains
