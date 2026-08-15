@@ -58,27 +58,28 @@ $entries = [
     <!-- a three-panel flexbox containing the edition, the logo in the middle, and the date on the right -->
     <div class="flex items-center justify-between px-4 py-2">
         <div class="header-left text-balance text-base-content/60 flex-1/6">
-            {{ 'Edition 0' }}
+            <p>{{ 'Volume ' . App\Models\Post::getVolume() }}</p>
+            <p>{{ 'Issue ' . App\Models\Post::getIssue() }}</p>
         </div>
-        <div class="nameplate text-3xl font-bold text-center flex-2/3">
-            Elysian Plains
-        </div>
+        <img src="{{ asset('elysian-plains-logo.svg') }}" alt="Elysian Plains Logo" class="inline-block" width="200" height="50">
         <div class="header-right text-base-content/60 text-right flex-1/6 flex-wrap">
-            {{ $date ?? now()->format('l, F j, Y') }}
+            <p>{{ $date ?? now()->format('l, F j, Y') }}</p>
+            @auth
+                <span class="text-sm">{{ auth()->user()->name }}</span>
+                <form method="POST" action="/logout" class="inline">
+                    @csrf
+                    <button type="submit" class="btn btn-ghost btn-sm">Logout</button>
+                </form>
+            @else
+                <a href="/login" class="text-base-content/60 hover:text-base-content">Login</a>
+                <a href="{{ route('register') }}" class="text-base-content/60 hover:text-base-content">Sign Up</a>
+            @endauth
         </div>
+
     </div>
 
     <nav class="flex flex-row-reverse gap-2 py-2">
-        @auth
-            <span class="text-sm">{{ auth()->user()->name }}</span>
-            <form method="POST" action="/logout" class="inline">
-                @csrf
-                <button type="submit" class="btn btn-ghost btn-sm">Logout</button>
-            </form>
-        @else
-        <a href="/login" class="text-base-content/60 hover:text-base-content">Login</a>
-        <a href="{{ route('register') }}" class="text-base-content/60 hover:text-base-content">Sign Up</a>
-        @endauth
+
     </nav>
 </header>
 <main class="flex content-center gap-4">

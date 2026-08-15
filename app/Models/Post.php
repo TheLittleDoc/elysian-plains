@@ -65,6 +65,24 @@ class Post extends Model implements Feedable
         return static::all();
     }
 
+    public static function getVolume()
+    {
+        // number of years since the first post
+        $firstPost = static::oldest()->first();
+        if (!$firstPost) {
+            return 1;
+        }
+        return now()->year - $firstPost->created_at->year + 1;
+    }
+
+    public static function getIssue()
+    {
+        // number of posts this year
+        return static::whereYear('created_at', now()->year)
+            ->where('published', 1)
+            ->count();
+    }
+
 }
 
 
