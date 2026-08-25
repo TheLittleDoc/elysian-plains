@@ -1,6 +1,12 @@
 <?php
 $entries = [
     [
+        'url' => '/',
+        'name' => 'Home',
+        'description' => 'View the home page',
+        'auth' => 0
+    ],
+    [
         'url' => '/login',
         'name' => 'Login',
         'description' => 'Login to your account',
@@ -19,24 +25,18 @@ $entries = [
         'auth' => 1
     ],
     [
-        'url' => '/posts.php',
-        'name' => 'Posts',
-        'description' => 'View all posts',
-        'auth' => 0
-    ],
-    [
-        'url' => '/',
-        'name' => 'Home',
-        'description' => 'View the home page',
-        'auth' => 0
-    ],
-    [
         'url' => '/posts',
         'method' => 'POST',
         'name' => 'Create Post',
         'description' => 'Create a new post',
         'auth' => 2
-    ]
+    ],
+    [
+        'url' => '/posts',
+        'name' => 'Posts',
+        'description' => 'View all posts',
+        'auth' => 0
+    ],
 ];
 ?>
 
@@ -68,11 +68,11 @@ $entries = [
                 <span class="text-sm">{{ auth()->user()->name }}</span>
                 <form method="POST" action="/logout" class="inline">
                     @csrf
-                    <button type="submit" class="btn btn-ghost btn-sm">Logout</button>
+                    <button type="submit" class="btn-auth">Logout</button>
                 </form>
             @else
-                <a href="/login" class="text-base-content/60 hover:text-base-content">Login</a>
-                <a href="{{ route('register') }}" class="text-base-content/60 hover:text-base-content">Sign Up</a>
+                <a href="/login" class="btn-auth text-base-content/60 hover:text-base-content">Login</a>
+                <a href="{{ route('register') }}" class="btn-auth text-base-content/60 hover:text-base-content">Sign Up</a>
             @endauth
         </div>
 
@@ -86,7 +86,7 @@ $entries = [
     <x-directory class="page-margin-column gap-4 px-4 py-2" :entries="$entries" :directoryHeading="$directoryHeading ?? 'Directory'">
 
     </x-directory>
-    <pageContent class="gap-4 px-4 py-2">
+    <pageContent class="">
         {{ $slot }}
     </pageContent>
     <gallery class="page-margin-column column-right gap-4 px-4 py-2">

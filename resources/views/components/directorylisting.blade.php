@@ -12,7 +12,7 @@
             </button>
         </form>
     @else
-        <a href="{{ $url }}" class="">
+        <a href="{{ $url }}" class="directory-listing-a">
             <h2 class="text-lg font-bold">{{ $name }}</h2>
             @if(isset($description))
                 <p class="tooltip mt-2 text-base-content/60">{{ $description }}</p>

@@ -9,9 +9,7 @@
     <x-slot:galleryHeading>
         Calendar
     </x-slot:galleryHeading>
-    <div class="max-w-4xl mx-auto">
-        @foreach ($posts as $post)
-            <x-renderer :post='$post'></x-renderer>
-        @endforeach
-    </div>
+    @foreach ($posts as $post)
+        <x-renderer :post='$post'></x-renderer>
+    @endforeach
 </x-layout>

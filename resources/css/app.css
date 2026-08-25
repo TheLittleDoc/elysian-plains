@@ -29,6 +29,20 @@ main {
     justify-content: center;
 }
 
+
+.post {
+    background-image: linear-gradient( /* chrome */ hsl(60, 20%, 95%), hsl(90, 20%, 90%) );
+    border-radius: 8px;
+    padding: 20px;
+    border-bottom: #070619 2px solid;
+    margin: 10px 12px;
+    box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.75);
+}
+
+.post-body {
+
+}
+
 .page-margin-column {
 
 
@@ -53,7 +67,12 @@ main {
 }
 
 .btn-a {
-    text-decoration: underline;
+    cursor: pointer;
+}
+
+.directory-listing-a h2
+{
+    text-decoration: none;
     cursor: pointer;
 }
 
@@ -114,8 +133,6 @@ pageContent {
     background-color: #f6f1e9;
     min-height: 40vh;
     flex-grow: 1;
-    margin: 10px;
-    padding: 10px;
     border-radius: 8px;
 }
 

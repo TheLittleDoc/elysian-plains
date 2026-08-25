@@ -1,8 +1,8 @@
 <?php use Carbon\Carbon; ?>
 
 @if($post['published'])
-    <div class="card bg-base-100 shadow mt-8">
-        <div class="card-body">
+    <div class="post">
+        <div class="post-body">
             <div>
                 <h1 class="text-3xl font-bold">{{$post['title']}}</h1>
                 @auth
