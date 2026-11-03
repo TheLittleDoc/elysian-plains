@@ -84,7 +84,7 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         if (auth()->user()->isAdmin()) {
-        // We'll add authorization in lesson 11
+
             $post->update($request->all());
 
             return redirect('/posts/' . $post['id'] . '/edit')->with('success', 'Post updated successfully!');
