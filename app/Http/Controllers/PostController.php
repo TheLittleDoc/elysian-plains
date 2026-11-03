@@ -16,6 +16,11 @@ class PostController extends Controller
     // show individual post
     public function show (Post $post)
     {
+
+        if (!$post) {
+            abort(404);
+        }
+
         if($post->published == 0)
         {
             // 404
@@ -73,6 +78,11 @@ class PostController extends Controller
         if(auth()->user())
         {
             if (auth()->user()->isAdmin()) {
+                // handle 404 for posts that don't exist
+                if (!$post) {
+                    abort(404);
+                }
+
                 return view('posts.edit', compact('post'));
             } else {
                 return redirect('/')->with('failure', 'You are not authorized to edit posts.');
