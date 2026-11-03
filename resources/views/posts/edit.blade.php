@@ -40,14 +40,21 @@
 
         <div class="mb-4">
             <label for="published" class="inline-flex items-center">
-                <input type="checkbox" name="published" id="published" value="1" {{ old('published', $post->published) ? 'checked' : '' }} class="checkbox">
+                <input type="hidden" name="published" value="0">
+                <input
+                    type="checkbox"
+                    name="published"
+                    id="published"
+                    value="1"
+                    {{ old('published', $post->published) ? 'checked' : '' }}
+                    class="checkbox"
+                >
                 <span class="ml-2">Published</span>
             </label>
         </div>
         <button type="button" class="btn btn-secondary mb-4" onclick="renderContent()">Render Content</button>
-        <button type="submit" class="btn btn-primary">Update Post</button>
         <button type="button" class="btn btn-warning ml-2" onclick="if(confirm('Are you sure you want to discard your edits?')) { window.location.href='{{ route('home') }}' }">Cancel</button>
-
+        <button type="submit" class="btn btn-primary">Update Post</button>
     </form>
     <form action="{{ route('posts.destroy', $post['id']) }}" method="POST" class="inline-block">
         @csrf
