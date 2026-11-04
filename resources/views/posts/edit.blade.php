@@ -52,7 +52,7 @@
                 <span class="ml-2">Published</span>
             </label>
         </div>
-        <button type="button" class="btn btn-secondary mb-4" onclick="renderContent()">Render Content</button>
+        <button type="button" class="btn btn-secondary mb-4" onclick="renderUsingBladeComponent()">Render Content</button>
         <button type="button" class="btn btn-warning ml-2" onclick="if(confirm('Are you sure you want to discard your edits?')) { window.location.href='{{ route('home') }}' }">Cancel</button>
         <button type="submit" class="btn btn-primary">Update Post</button>
     </form>
@@ -65,7 +65,8 @@
     <div class="max-w-2xl mx-auto mt-8">
         <h2 class="text-2xl font-bold mb-4">Rendered Content Preview</h2>
         <div id="rendered_content" class="border p-4 rounded bg-gray-50">
-            <!-- Rendered content will appear here -->
+            <!-- Rendered content will appear here after clicking "Render Content" -->
+
         </div>
     </div>
 </x-layout>

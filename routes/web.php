@@ -48,3 +48,7 @@ Route::post('/profile', \App\Http\Controllers\Auth\UpdateProfile::class)
     ->name('profile.update');
 
 Route::feeds();
+
+
+Route::post("/render-content", [PostController::class, 'renderContent'])
+    ->name('render-content');

@@ -152,6 +152,36 @@ function addBlock() {
     updateContentTextarea();
 }
 
+function renderUsingBladeComponent() {
+    // uses the blade component rather than the JS renderer to render the content
+    parseContent();
+
+    const renderedContentDiv = document.getElementById('rendered_content');
+    renderedContentDiv.innerHTML = ''; // Clear previous content
+    console.log(JSON.stringify({ content: JSON.stringify(json_content) }));
+    // Send the content to the server for rendering using Blade
+    fetch('/render-content', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ content: JSON.stringify(json_content) })
+    })
+    .then(response => response.text())
+    .then(html => {
+        console.log(html);
+        renderedContentDiv.innerHTML = html;
+    })
+    .catch(error => {
+        console.error('Error rendering content:', error);
+        alert('Error rendering content. Check console for details.');
+    });
+    // unescape string
+
+
+}
+
 window.addBlock = addBlock;
 window.renderContent = renderContent;
 window.updateContentTextarea = updateContentTextarea;
+window.renderUsingBladeComponent = renderUsingBladeComponent;

@@ -10,6 +10,6 @@
         Calendar
     </x-slot:galleryHeading>
     @foreach ($posts as $post)
-        <x-renderer :post='$post'></x-renderer>
+        <x-pubpost :post='$post'></x-pubpost>
     @endforeach
 </x-layout>

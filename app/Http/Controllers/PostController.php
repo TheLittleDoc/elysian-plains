@@ -117,4 +117,23 @@ class PostController extends Controller
             return redirect('/')->with('failure', 'You are not authorized to delete posts.');
         }
     }
+
+    public function renderContent(Request $request)
+    {
+        $content = $request->input('content');
+        $tempPost = [
+            'title' => $request->input('title', 'Untitled Post'),
+            'content' => $content,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ];
+        // Render the content using the renderer component
+        $renderedContent = view('components.renderer', ['post' => $tempPost])->render();
+        if(!$renderedContent)
+        {
+            return response()->json(['error' => 'Failed to render content.'], 500);
+        }
+        return response(content: $renderedContent, status: 200);
+
+    }
 }
