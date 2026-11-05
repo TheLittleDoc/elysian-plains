@@ -26,6 +26,11 @@ class Post extends Model implements Feedable
     // content is of type json
     public static function newest()
     {
+        //check if db is empty
+        if(!self::latest()->first())
+        {
+            return 0;
+        }
         return self::latest()->first()->id;
     }
 
