@@ -45,7 +45,7 @@ $entries = [
 <head>
 
     <title>{{ isset($title) ? $title . ' - Elysian Plains' : 'Elysian Plains' }}</title>
-
+    @include('feed::links')
 
     @vite(array_merge([
         'resources/js/app.js',
