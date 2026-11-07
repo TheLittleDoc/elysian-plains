@@ -52,3 +52,8 @@ Route::feeds();
 
 Route::post("/render-content", [PostController::class, 'renderContent'])
     ->name('render-content');
+
+// handle 404
+Route::fallback(function () {
+    return response()->view('errors.404', ['message' => 'The page you are looking for could not be found.'], 404);
+});

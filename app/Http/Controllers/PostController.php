@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
+const POST_NOT_FOUND_MESSAGE = 'This post does not exist.';
+const POST_NOT_PUBLISHED_MESSAGE = 'This post is not published.';
+const POST_NOT_AUTHORIZED_MESSAGE = 'You are not authorized to manage posts.';
+
 class PostController extends Controller
 {
     public function index()
@@ -18,14 +22,14 @@ class PostController extends Controller
     {
 
         if (!$post) {
-            abort(404);
+            abort(404, POST_NOT_FOUND_MESSAGE);
         }
 
         if($post->published == 0)
         {
             // 404
             if(!auth()->user() || !auth()->user()->isAdmin())
-                abort(404);
+                abort(404, POST_NOT_FOUND_MESSAGE);
 
         }
         return view('posts.post', compact('post'));
@@ -34,21 +38,14 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-
         if(!auth()->user())
         {
-            return redirect('/')->with('failure', 'You must be logged in to create posts.');
+            abort(404);
         }
         // popup alert
-        if (auth()->user()->isAdmin()) {
-            $message = "You are an admin and can create posts. (Admin ID: " . auth()->id() . ")";
-        } else {
-
-            $message = "You are not an admin and cannot create posts. (User ID: " . auth()->id() . ")";
-            return redirect('/')->with('failure', 'You are not authorized to create posts.');
+        if (!auth()->user()->isAdmin()) {
+            abort(403, POST_NOT_AUTHORIZED_MESSAGE);
         }
-        echo "<script type='text/javascript'>alert('$message');</script>";
-
         $post = Post::create([
             'title' => 'New Post',
             'content' => json_encode([
@@ -66,8 +63,6 @@ class PostController extends Controller
             'published' => 0,
         ]);
 
-
-
         $post->save();
 
         return redirect('/posts/' . $post['id'] . '/edit')->with('success', 'Post created successfully!');
@@ -80,15 +75,15 @@ class PostController extends Controller
             if (auth()->user()->isAdmin()) {
                 // handle 404 for posts that don't exist
                 if (!$post) {
-                    abort(404);
+                    abort(404, POST_NOT_FOUND_MESSAGE);
                 }
 
                 return view('posts.edit', compact('post'));
             } else {
-                return redirect('/')->with('failure', 'You are not authorized to edit posts.');
+                abort(403, POST_NOT_AUTHORIZED_MESSAGE);
             }
         }
-        return redirect('/')->with('failure', 'You must be logged in to edit posts.');
+        abort(404);
     }
 
     public function update(Request $request, Post $post)
@@ -99,7 +94,7 @@ class PostController extends Controller
 
             return redirect('/posts/' . $post['id'] . '/edit')->with('success', 'Post updated successfully!');
         } else {
-            return redirect('/')->with('failure', 'You are not authorized to update posts.');
+            abort(403, POST_NOT_AUTHORIZED_MESSAGE);
         }
     }
 
@@ -107,14 +102,14 @@ class PostController extends Controller
     {
         //check if authenticated at all
         if (!auth()->user()) {
-            return redirect('/')->with('failure', 'You must be logged in to delete posts.');
+            abort(403, POST_NOT_AUTHORIZED_MESSAGE);
         }
         if (auth()->user()->isAdmin()) {
             $post->delete();
 
             return redirect('/')->with('success', 'Post deleted successfully!');
         } else {
-            return redirect('/')->with('failure', 'You are not authorized to delete posts.');
+            abort(403, POST_NOT_AUTHORIZED_MESSAGE);
         }
     }
 
@@ -128,7 +123,11 @@ class PostController extends Controller
             'updated_at' => now(),
         ];
         // Render the content using the renderer component
-        $renderedContent = view('components.renderer', ['post' => $tempPost])->render();
+        try {
+            $renderedContent = view('components.renderer', ['post' => $tempPost])->render();
+        } catch (\Throwable $e) {
+            return response()->json(['error' => 'Failed to render content: ' . $e->getMessage(), 'Input' => $tempPost], 500);
+        }
         if(!$renderedContent)
         {
             return response()->json(['error' => 'Failed to render content.'], 500);
