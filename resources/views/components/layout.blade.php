@@ -52,6 +52,7 @@ $entries = [
         'resources/css/app.css',
     ], $additonalAssets ?? []))
     @stack('scripts')
+    <link rel="icon" href="{{ asset('favicon.ico') }}" />
 </head>
 <body>
 <header>
