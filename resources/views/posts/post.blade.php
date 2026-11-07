@@ -3,6 +3,6 @@
 
 <x-layout>
     <div class="max-w-4xl mx-auto">
-        <x-renderer :post='$post'></x-renderer>
+        <x-pubpost :post='$post'></x-pubpost>
     </div>
 </x-layout>
