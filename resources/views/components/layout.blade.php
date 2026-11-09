@@ -53,6 +53,8 @@ $entries = [
     ], $additonalAssets ?? []))
     @stack('scripts')
     <link rel="icon" href="{{ asset('favicon.ico') }}" />
+    <link rel="apple-touch-icon" href="{{asset('apple-touch-icon.png')}}">
+    <link rel="icon" href="{{asset("favicon.svg")}}" sizes="any" type="image/svg+xml">
 </head>
 <body>
 <header>
